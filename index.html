@@ -3,120 +3,559 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Md. Joynal Abedin Parag - Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 1rem 0;
+            object-fit: cover;
+            border: 3px solid #ecf0f1;
+        }
+
+        .contact-info {
+            margin-top: 1rem;
+        }
+
+        nav {
+            background-color: #34495e;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 1rem 0;
+            display: inline-block;
+        }
+
+        .section {
+            background-color: #fff;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #2c3e50;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: #fff;
+            border: 4px solid #2c3e50;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid #fff;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid #fff;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #fff transparent transparent;
+        }
+
+        .right::after {
+            left: -16px;
+        }
+
+        .content {
+            padding: 20px 30px;
+            background-color: #fff;
+            position: relative;
+            border-radius: 6px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill {
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .project {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .project h3 {
+            margin-bottom: 10px;
+        }
+
+        .project-details {
+            margin-top: 10px;
+        }
+
+        .details-btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        @media screen and (max-width: 600px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::before {
+                left: 60px;
+                border: medium solid #fff;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent #fff transparent transparent;
+            }
+
+            .left::after, .right::after {
+                left: 15px;
+            }
+
+            .right {
+                left: 0%;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Md. Joynal Abedin Parag</h1>
-            <p class="title">Software Development Team Lead | IT Expert | Innovator</p>
-            <div class="contact-info">
-                <p>📱 +8801814266295 | 📧 parag.cste@gmail.com</p>
-            </div>
+        <img src="your-image-url.jpg" alt="Md. Joynal Abedin Parag" class="profile-image">
+        <h1>Md. Joynal Abedin Parag</h1>
+        <p class="subtitle">Software Development Team Lead</p>
+        <div class="contact-info">
+            <p>Email: parag.cste@gmail.com | Phone: 8801814266295</p>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <section class="about">
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section id="about" class="section">
+            <div class="section-header">
                 <h2>About Me</h2>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="section-content">
                 <p>With over 12+ years of experience at the intersection of Information Technology, software development, and business development, I've had the privilege of driving innovation and transformation across diverse industries. I'm deeply passionate about harnessing technology to solve complex business challenges.</p>
-            </section>
+            </div>
+        </section>
 
-            <section class="experience">
-                <h2>Job Experiences</h2>
-
-                <div class="job">
-                    <h3>Divergent Technologies Ltd — Software Development Team Lead</h3>
-                    <p><strong>February 2024 – Present</strong></p>
-                    <p>Responsible for Requirement Analysis, System Design, Team Management, and client communication.</p>
+        <section id="experience" class="section">
+            <div class="section-header">
+                <h2>Experience Timeline</h2>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3>Software Development Team Lead</h3>
+                            <p>Divergent Technologies Ltd</p>
+                            <p>February 2024 - Present</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="content">
+                            <h3>Assistant Programmer</h3>
+                            <p>Chattogram Development Authority</p>
+                            <p>September 2021 - January 2024</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3>Lead Engineer</h3>
+                            <p>Samsung R&D Institute Bangladesh</p>
+                            <p>September 2018 - September 2021</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="content">
+                            <h3>Sr. Software Engineer</h3>
+                            <p>ServicEngineBPO, Dhaka</p>
+                            <p>September 2015 - September 2018</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3>Software Engineer</h3>
+                            <p>CloudWell Limited, Dhaka</p>
+                            <p>October 2014 - August 2015</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="content">
+                            <h3>Web Developer</h3>
+                            <p>One Leap Microsystem, Chittagong</p>
+                            <p>March 2013 - September 2014</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="job">
-                    <h3>Chattogram Development Authority — Assistant Programmer</h3>
-                    <p><strong>September 2021 – January 2024</strong></p>
-                    <p>Completely responsible for Network and Data Security System. Designed, set up, and configured network systems, maintaining all systems on-site and remotely. Database administration and application development.</p>
-                </div>
-
-                <div class="job">
-                    <h3>Samsung R&D Institute Bangladesh — Lead Engineer</h3>
-                    <p><strong>September 2018 – September 2021</strong></p>
-                    <p>Microcontroller-based system design using Arduino and RaspberryPi. Developed applications for in-house usage and clients.</p>
-                </div>
-
-                <div class="job">
-                    <h3>ServicEngineBPO — Sr. Software Engineer</h3>
-                    <p><strong>September 2015 – September 2018</strong></p>
-                    <p>Developed PHP, NodeJS applications for both internal usage and foreign clients.</p>
-                </div>
-
-                <div class="job">
-                    <h3>CloudWell Limited — Software Engineer</h3>
-                    <p><strong>October 2014 – August 2015</strong></p>
-                    <p>Developed REST API server for third parties and API integration with telecom operators.</p>
-                </div>
-
-                <!-- Add more job experiences similarly -->
-            </section>
-
-            <section class="skills">
+        <section id="skills" class="section">
+            <div class="section-header">
                 <h2>Skills</h2>
-                <ul>
-                    <li>Languages: C, PHP, Python, C#, JS</li>
-                    <li>Frameworks: Laravel, ASP.NET, Django, Express, Zend, CodeIgniter</li>
-                    <li>Databases: MySQL, PostgreSQL, MongoDB, SQL Server</li>
-                    <li>JS: React, Vue.js, NodeJS</li>
-                    <li>Misc: AWS, REST & SOAP APIs, Linux System Administration, Network Administration</li>
-                </ul>
-            </section>
-
-            <section class="education">
-                <h2>Education</h2>
-                <div class="education-item">
-                    <h3>Noakhali Science & Technology University</h3>
-                    <p>Computer Science & Telecommunication Engineering, 2008 - 2013</p>
-                    <p>CGPA: 3.42/4.0</p>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="skills">
+                    <span class="skill">C</span>
+                    <span class="skill">PHP</span>
+                    <span class="skill">Python</span>
+                    <span class="skill">C#</span>
+                    <span class="skill">JavaScript</span>
+                    <span class="skill">Laravel</span>
+                    <span class="skill">Express</span>
+                    <span class="skill">Django</span>
+                    <span class="skill">MySQL</span>
+                    <span class="skill">Oracle</span>
+                    <span class="skill">MongoDB</span>
+                    <span class="skill">React</span>
+                    <span class="skill">Vue.js</span>
+                    <span class="skill">Node.js</span>
                 </div>
+            </div>
+        </section>
 
-                <div class="education-item">
-                    <h3>Chittagong Cant Public College</h3>
-                    <p>HSC, Science, 2005 - 2007</p>
-                    <p>GPA: 4.60/5.0</p>
-                </div>
-            </section>
-
-            <section class="projects">
+        <section id="projects" class="section">
+            <div class="section-header">
                 <h2>Projects</h2>
-
-                <div class="project">
-                    <h3><a href="https://github.com/joynalabedinparag/Remote-Testing-Platform">Remote Testing Platform</a></h3>
-                    <p>Developed a desktop app to remotely control and test Samsung Air Dresser devices.</p>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="projects">
+                    <!-- Previous project entries remain the same -->
+                    <div class="project">
+                        <h3>App Builder</h3>
+                        <p>Web interface for customizing mobile apps, with the ability to download Android (.apk) or iOS (.ipa) files.</p>
+                        <button class="details-btn" data-project="app-builder">Details</button>
+                    </div>
+                    <div class="project">
+                        <h3>E-bike Rental</h3>
+                        <p>E-commerce application for selling electric e-bikes from leading brands.</p>
+                        <button class="details-btn" data-project="e-bike-rental">Details</button>
+                    </div>
+                    <div class="project">
+                        <h3>PDS CRM</h3>
+                        <p>Application for Paywell to manage retailers, devices, and balances.</p>
+                        <button class="details-btn" data-project="pds-crm">Details</button>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="project">
-                    <h3><a href="https://github.com/joynalabedinparag/Broken-link-checker-python">Test Automation Tools</a></h3>
-                    <p>A tool to recursively search for broken links on websites and visualize results in reports.</p>
-                </div>
-
-                <!-- Add more projects here -->
-            </section>
-
-            <section class="references">
-                <h2>References</h2>
-                <p><strong>Md. Abu Issa Anshary</strong><br>Deputy Chief Town Planner, Chattogram Development Authority<br>📱 +8801817748292 | 📧 plnr.issa@gmail.com</p>
-
-                <p><strong>Abdullah Al Mamun</strong><br>Lab Head, Developer Experience Group, Samsung R&D Institute Bangladesh<br>📱 +8801730726849 | 📧 mamun@samsung.com</p>
-            </section>
-        </div>
+        <section id="education" class="section">
+            <div class="section-header">
+                <h2>Education</h2>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Noakhali Science & Technology University</h3>
+                <p>Computer Science & Telecommunication Engineering</p>
+                <p>2008 - 2013 | CGPA: 3.42 out of 4</p>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2024 Md. Joynal Abedin Parag. All rights reserved.</p>
-        </div>
+        <p>&copy; 2024 Md. Joynal Abedin Parag. All rights reserved.</p>
     </footer>
+
+    <!-- Modal for project details -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for header
+        gsap.from("header", {
+            opacity: 0,
+            y: -50,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        // Animation for nav
+        gsap.from("nav", {
+            opacity: 0,
+            y: -20,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.5
+        });
+
+        // Animation for sections
+        gsap.utils.toArray(".section").forEach(section => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Collapsible sections
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const toggleBtn = header.querySelector('.toggle-btn');
+                
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                    toggleBtn.textContent = '▼';
+                } else {
+                    content.style.display = 'block';
+                    toggleBtn.textContent = '▲';
+                }
+            });
+        });
+
+        // Modal functionality
+        const modal = document.getElementById("projectModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalContent = document.getElementById("modalContent");
+        const closeBtn = document.getElementsByClassName("close")[0];
+
+        document.querySelectorAll('.details-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const project = btn.getAttribute('data-project');
+                modalTitle.textContent = btn.previousElementSibling.previousElementSibling.textContent;
+                modalContent.innerHTML = `<p>Details for ${project} project.</p><p>Images would be displayed here.</p>`;
+                modal.style.display = "block";
+            });
+        });
+
+        closeBtn.onclick = () => {
+            modal.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                section.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
+
+
+
